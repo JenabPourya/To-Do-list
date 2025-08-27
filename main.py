@@ -1,6 +1,6 @@
 # todo.py
 
-ToDo_list = []
+To_Do_list = []
 
 def Show_menu():
     print("\n To-Do List 📋")
@@ -10,22 +10,22 @@ def Show_menu():
     print("4. Quit")
 
 def Show_tasks():
-    if not ToDo_list:
+    if not To_Do_list:
         print("Ooh Gosh...The list is empty!!!")
     else:
-        for i, task in enumerate(ToDo_list, 1):
+        for i, task in enumerate(To_Do_list, 1):
             print(f"{i}. {task}")
 
 def Add_task():
     task = input("Enter the task title: ")
-    ToDo_list.append(task)
+    To_Do_list.append(task)
     print("Added task ✅ ")
 
 def Remove_task():
     Show_tasks()
     try:
         index = int(input("The task number you want to delete :"))
-        Removed = ToDo_list.pop(index - 1)
+        Removed = To_Do_list.pop(index - 1)
         print(f" '{Removed}' deleted ❌ ")
     except (ValueError, IndexError):
         print("Sorry... Invalid number")
