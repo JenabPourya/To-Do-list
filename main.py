@@ -1,6 +1,18 @@
-# todo.py
+import json
 
 To_Do_list = []
+
+def Save_tasks():
+    with open("tasks.json", "w") as f:
+        json.dump(To_Do_list, f)
+
+def Load_tasks():
+    global To_Do_list
+    try:
+        with open("tasks.json", "r") as f:
+            To_Do_list = json.load(f)
+    except FileNotFoundError:
+        To_Do_list = []
 
 def Show_menu():
     print("\n To-Do List 📋")
@@ -30,6 +42,8 @@ def Remove_task():
     except (ValueError, IndexError):
         print("Sorry... Invalid number")
 
+# Run the program
+Load_tasks()
 while True:
     Show_menu()
     choice = input("your choice:")
