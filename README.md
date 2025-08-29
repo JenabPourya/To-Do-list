@@ -1,31 +1,63 @@
-# To-Do-list (Python CLI)
-Every minute saved in planning saves ten minutes of execution time (Brian Tracy) To reduce the execution time of your tasks, you can use this code. The input to the program is your tasks, and the output is the listed tasks.
+import json
 
-This program is : A simple task management application using Python.
-This program runs : From the command line and allows the user to manage their daily tasks.
-## Features
-- Show task list
-- Add a new task 
-- Remove tasks
-- Simple user interface in the terminal
+To_Do_list = []
 
-## Used technologies
-- Python 3.8 (thank you mr. Guido Van Rossum!)
-- Development environment : Visual Stodio Code
+def Save_tasks():
+    with open("tasks.json", "w") as f:
+        json.dump(To_Do_list, f)
 
-## How to run
+def Load_tasks():
+    global To_Do_list
+    try:
+        with open("tasks.json", "r") as f:
+            To_Do_list = json.load(f)
+    except FileNotFoundError:
+        To_Do_list = []
 
-1. First clone the repository:
-```bash
-git clone https://github.com/your-username/todo-list-python.git
-2. Enter the project folder:
-```bash
-cd todo-list-python
-3. Run the program:
-```bash
-python todo.py
+def Show_menu():
+    print("\n📋 To-Do List")
+    print("1. Show tasks")
+    print("2. Add a task")
+    print("3. Delete a task")
+    print("4. Quit")
 
-I would be happy if you have any suggestions or want to contribute 
-File an issue or pull request
+def Show_tasks():
+    if not To_Do_list:
+        print("😢 The list is empty!")
+    else:
+        for i, task in enumerate(To_Do_list, 1):
+            print(f"{i}. {task}")
 
-Mr. POURYA wishes you progress.
+def Add_task():
+    task = input("Enter the task title: ")
+    To_Do_list.append(task)
+    Save_tasks()
+    print("✅ Task added.")
+
+def Remove_task():
+    Show_tasks()
+    try:
+        index = int(input("Enter the task number to delete: "))
+        removed = To_Do_list.pop(index - 1)
+        Save_tasks()
+        print(f"❌ '{removed}' deleted.")
+    except (ValueError, IndexError):
+        print("⚠️ Invalid number.")
+
+# اجرای برنامه
+Load_tasks()
+
+while True:
+    Show_menu()
+    choice = input("Your choice: ")
+    if choice == "1":
+        Show_tasks()
+    elif choice == "2":
+        Add_task()
+    elif choice == "3":
+        Remove_task()
+    elif choice == "4":
+        print("👋 Goodbye!")
+        break
+    else:
+        print("⚠️ Invalid option.")
